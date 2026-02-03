@@ -174,6 +174,22 @@ function apiKeyAuth(req, res, next) {
 }
 
 // =============================================================================
+// Routes: Virtual Key (for Tesla Fleet API partner registration)
+// =============================================================================
+
+// EC P-256 public key for virtual key pairing
+// Private key stored securely in 1Password: clawdbot/tesla-private-key
+const TESLA_PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEDKVqT408A1xgxn4mWboQiw1py3k3
+d3DZJ4zBPR15MTgBVgCxltqQaprQZvVzLp0Ro64oMWonfFtQIe1VKPwjKg==
+-----END PUBLIC KEY-----
+`;
+
+app.get('/.well-known/appspecific/com.tesla.3p.public-key.pem', (req, res) => {
+  res.type('application/x-pem-file').send(TESLA_PUBLIC_KEY);
+});
+
+// =============================================================================
 // Routes: Health & Status
 // =============================================================================
 
